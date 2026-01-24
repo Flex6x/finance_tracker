@@ -26,7 +26,7 @@ label.grid(row=0, column=1)
 def button_callback():
     print ("Hallo")
 
-# Add a button
+# Buttons
 button1 = ctk.CTkButton(
     master=app,
     text="Click Me",
@@ -37,8 +37,33 @@ button1 = ctk.CTkButton(
     corner_radius=8,
     hover=True
 )
-button1.grid(row=1, column=1, padx=10, pady=10)
-#Textfeld 
+button1.grid(row=1, column=0, padx=10, pady=10, sticky ="nwe")
+
+button2 = ctk.CTkButton(
+    master=app,
+    text="Click Me",
+    command=button_callback,
+    width=200,
+    height=50,
+    border_width=0,
+    corner_radius=8,
+    hover=True
+)
+button2.grid(row=1, column=1, padx=10, pady=10, sticky ="nwe")
+
+button3 = ctk.CTkButton(
+    master=app,
+    text="Click Me",
+    command=button_callback,
+    width=200,
+    height=50,
+    border_width=0,
+    corner_radius=8,
+    hover=True
+)
+button3.grid(row=1, column=2, padx=10, pady=10, sticky ="nwe")
+
+# Beschreibung 
 
 label = ctk.CTkLabel(
     master=app,
@@ -47,7 +72,7 @@ label = ctk.CTkLabel(
     text_color="white",
     corner_radius=8
 )
-label.grid(row=2, column=1)
+label.grid(row=2, column=1,sticky ="n")
 
 
 
