@@ -18,5 +18,16 @@ label.pack(pady=20)
 button = ctk.CTkButton(app, text="Click Me", command=lambda: print("Button clicked!"))
 button.pack(pady=10)
 
+#Textfeld 
+
+label = ctk.CTkLabel(
+    master=app,
+    text="Willkommen zu Deinem persönlichen Finanztracker. Du kannst Ausgabelimits erstellen und deine Ausgaben tracken, Sparziele erstellen und schauen ob du diese einhälst und alles in Diagrammen übersichtlich darstellen.", wraplength=500, #mit automatischem Zeilenumbruch
+    font=("Arial", 20),
+    text_color="white",
+    corner_radius=8
+)
+label.pack(pady=10)
+
 # Run the application
 app.mainloop()
