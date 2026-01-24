@@ -10,14 +10,34 @@ app.title("Finanz Tracker")
 app.geometry("800x600")
 app.resizable(width=True, height =True) #Fenstereinstellungen skalierbar
 
+# Rows and Columns
+app.columnconfigure (0,weight=1)
+app.columnconfigure (1,weight=1)
+app.columnconfigure (2,weight=1)
+
+app.rowconfigure (0,weight=1)
+app.rowconfigure (1,weight=1)
+app.rowconfigure (2,weight=1)
+
 # Überschrift
 label = ctk.CTkLabel(app, text="Finanz Tracker", font=("Arial", 35))
-label.pack(pady=20)
+label.grid(row=0, column=1)
+
+def button_callback():
+    print ("Hallo")
 
 # Add a button
-button = ctk.CTkButton(app, text="Click Me", command=lambda: print("Button clicked!"))
-button.pack(pady=10)
-
+button1 = ctk.CTkButton(
+    master=app,
+    text="Click Me",
+    command=button_callback,
+    width=200,
+    height=50,
+    border_width=0,
+    corner_radius=8,
+    hover=True
+)
+button1.grid(row=1, column=1, padx=10, pady=10)
 #Textfeld 
 
 label = ctk.CTkLabel(
@@ -27,7 +47,9 @@ label = ctk.CTkLabel(
     text_color="white",
     corner_radius=8
 )
-label.pack(pady=10)
+label.grid(row=2, column=1)
+
+
 
 # Run the application
 app.mainloop()
