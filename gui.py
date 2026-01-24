@@ -17,7 +17,7 @@ app.columnconfigure (2,weight=1)
 
 app.rowconfigure (0,weight=1)
 app.rowconfigure (1,weight=1)
-app.rowconfigure (2,weight=1)
+app.rowconfigure (2,weight=5)
 
 # Überschrift
 label = ctk.CTkLabel(app, text="Finanz Tracker", font=("Arial", 35))
@@ -37,7 +37,7 @@ button1 = ctk.CTkButton(
     corner_radius=8,
     hover=True
 )
-button1.grid(row=1, column=0, padx=10, pady=10, sticky ="nwe")
+button1.grid(row=1, column=0, padx=15, pady=10, sticky ="nwe")
 
 button2 = ctk.CTkButton(
     master=app,
@@ -49,7 +49,7 @@ button2 = ctk.CTkButton(
     corner_radius=8,
     hover=True
 )
-button2.grid(row=1, column=1, padx=10, pady=10, sticky ="nwe")
+button2.grid(row=1, column=1, padx=15, pady=10, sticky ="nwe")
 
 button3 = ctk.CTkButton(
     master=app,
@@ -61,7 +61,7 @@ button3 = ctk.CTkButton(
     corner_radius=8,
     hover=True
 )
-button3.grid(row=1, column=2, padx=10, pady=10, sticky ="nwe")
+button3.grid(row=1, column=2, padx=15, pady=10, sticky ="nwe")
 
 # Beschreibung 
 
@@ -72,7 +72,7 @@ label = ctk.CTkLabel(
     text_color="white",
     corner_radius=8
 )
-label.grid(row=2, column=1,sticky ="n")
+label.grid(row=2, column=0,columnspan=3,sticky ="n")
 
 
 
