@@ -1,0 +1,7 @@
+Eigenes Python Programm: Kleiner Finanz Tracker
+
+-Alle Aufgaben werden eingegeben
+-max. Ausgabelimit
+-Sparziel angeben
+-Geld zur Seite legen -> Monatliche Statistik
+-gespartes Geld tracken
