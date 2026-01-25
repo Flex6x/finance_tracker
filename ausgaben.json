@@ -3,5 +3,10 @@
         "produkt": "ha",
         "Preis": 3,
         "Datum": 23
+    },
+    {
+        "produkt": "hallo",
+        "Preis": 23,
+        "Datum": 23
     }
 ]
