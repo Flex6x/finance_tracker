@@ -17,8 +17,17 @@ app.columnconfigure (2,weight=1)
 app.columnconfigure (3,weight=1)
 app.columnconfigure (4,weight=1)
 
+app.rowconfigure (0,weight=1)
+app.rowconfigure (1,weight=1)
+app.rowconfigure (2,weight=5)
+app.rowconfigure (3,weight=1)
+
+
 # Tabview
-tabview = ctk.CTkTabview(app)
+tabview = ctk.CTkTabview(
+        master=app,               
+        corner_radius=20        
+)
 tabview.grid(row=1, column=0, rowspan=2,columnspan=5, sticky="nsew")
 
 # Tabs 
@@ -31,10 +40,6 @@ tab5=tabview.add("Sparziel")
 # rows and columns in tab1
 tab1.grid_rowconfigure(0, weight=1)
 tab1.grid_columnconfigure(0, weight=1)
-
-app.rowconfigure (0,weight=1)
-app.rowconfigure (1,weight=1)
-app.rowconfigure (2,weight=5)
 
 # Überschrift
 label = ctk.CTkLabel(app, text="Finanz Tracker", font=("Arial", 35))
