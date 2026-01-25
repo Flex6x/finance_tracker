@@ -18,5 +18,10 @@
         "produkt": "nigi",
         "preis": 23,
         "datum": 2050123
+    },
+    {
+        "produkt": "lennart",
+        "preis": 15,
+        "datum": 0
     }
 ]

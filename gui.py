@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkinter import ttk
+import json
 
 # Auswahl zwischen dark/light und theme
 ctk.set_appearance_mode("dark")
@@ -76,10 +77,33 @@ label = ctk.CTkLabel(
 )
 label.grid(row=0, column=0,sticky ="ew")
 
-# Tabelle in Tab 2
+# Tabelle in Tab 2 anlegen
 
 table = ttk.Treeview(tab2,columns = ("produkt", "preis", "datum"),show="headings")
+table.heading("produkt",text="Produkt")
+table.heading("preis",text="Preis")
+table.heading("datum",text="Datum")
 table.grid(row=0,column=0,sticky="nsew")
+
+# Einträge aus ausgaben.json lesen und in listen eintragen 
+
+with open("ausgaben.json", "r") as fh:
+    ausgaben = json.load(fh)
+
+produkte=[]
+preis=[]
+datum=[]
+
+print("Daten\n")
+
+for eintrag in ausgaben:
+    produkte.append(eintrag["produkt"])
+    preis.append(eintrag["preis"])
+    datum.append(eintrag["datum"])
+
+#Einträge eintragen
+for i in range (len(produkte)):
+    table.insert(parent="", index=i, values =(produkte[i], preis[i], datum[i])) 
 
 # Run the application
 app.mainloop()
