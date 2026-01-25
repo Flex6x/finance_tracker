@@ -14,6 +14,8 @@ app.resizable(width=True, height =True) #Fenstereinstellungen skalierbar
 app.columnconfigure (0,weight=1)
 app.columnconfigure (1,weight=1)
 app.columnconfigure (2,weight=1)
+app.columnconfigure (3,weight=1)
+app.columnconfigure (4,weight=1)
 
 app.rowconfigure (0,weight=1)
 app.rowconfigure (1,weight=1)
@@ -21,7 +23,7 @@ app.rowconfigure (2,weight=5)
 
 # Überschrift
 label = ctk.CTkLabel(app, text="Finanz Tracker", font=("Arial", 35))
-label.grid(row=0, column=1)
+label.grid(row=0, column=0, columnspan=5)
 
 def button_callback():
     print ("Hallo")
@@ -63,6 +65,30 @@ button3 = ctk.CTkButton(
 )
 button3.grid(row=1, column=2, padx=15, pady=10, sticky ="nwe")
 
+button4 = ctk.CTkButton(
+    master=app,
+    text="Click Me",
+    command=button_callback,
+    width=200,
+    height=50,
+    border_width=0,
+    corner_radius=8,
+    hover=True
+)
+button4.grid(row=1, column=3, padx=15, pady=10, sticky ="nwe")
+
+button4 = ctk.CTkButton(
+    master=app,
+    text="Click Me",
+    command=button_callback,
+    width=200,
+    height=50,
+    border_width=0,
+    corner_radius=8,
+    hover=True
+)
+button4.grid(row=1, column=4, padx=15, pady=10, sticky ="nwe")
+
 # Beschreibung 
 
 label = ctk.CTkLabel(
@@ -72,7 +98,7 @@ label = ctk.CTkLabel(
     text_color="white",
     corner_radius=8
 )
-label.grid(row=2, column=0,columnspan=3,sticky ="n")
+label.grid(row=2, column=0,columnspan=5,sticky ="n")
 
 
 
