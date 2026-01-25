@@ -1,5 +1,7 @@
-{
-    "produkt": "hall",
-    "Preis": 23,
-    "Datum": 2
-}
+[
+    {
+        "produkt": "ha",
+        "Preis": 3,
+        "Datum": 23
+    }
+]

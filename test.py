@@ -11,22 +11,22 @@ neu = {
     "Datum": datum
 }
 
-#with open ("ausgaben.json", "w", encoding="utf-8") as datei:
-    #json.dump(daten,datei,indent=4,ensure_ascii=False)
+# Prüfung, ob .json und array existiert
 
 if os.path.exists("ausgaben.json"):
-    # Datei lesen
     with open("ausgaben.json", "r", encoding="utf-8") as datei:
         try:
-            daten = json.load(datei)  # bestehendes Array laden
+            daten = json.load(datei)
+            # falls ein einzelnes Objekt drinsteht, in Liste umwandeln
+            if isinstance(daten, dict):
+                daten = [daten]
         except json.JSONDecodeError:
-            daten = []  # falls Datei leer oder ungültig
+            daten = []
 else:
-    daten = []  # neue Datei -> leeres Array
+    daten = []
 
-# 2. Neuen Eintrag anhängen
-daten.append(neu)
+daten.append(neu) # Eintrag wird der zu "daten hinzugefügt"
 
-# 3. Alles wieder zurückschreiben
+# Anhang wird ausgeführt
 with open("ausgaben.json", "w", encoding="utf-8") as datei:
     json.dump(daten, datei, indent=4, ensure_ascii=False)
