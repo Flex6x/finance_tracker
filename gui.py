@@ -20,14 +20,17 @@ app.columnconfigure (4,weight=1)
 app.rowconfigure (0,weight=1)
 app.rowconfigure (1,weight=1)
 app.rowconfigure (2,weight=5)
-app.rowconfigure (3,weight=1)
+app.rowconfigure (3,weight=2)
 
 
 # Tabview
 tabview = ctk.CTkTabview(
         master=app,               
-        corner_radius=20        
-)
+        corner_radius=20,
+        #fg_color="#242424",
+        segmented_button_selected_color="gray",
+        segmented_button_selected_hover_color="black"
+        )
 tabview.grid(row=1, column=0, rowspan=2,columnspan=5, sticky="nsew")
 
 # Tabs 
