@@ -44,6 +44,22 @@ tab5=tabview.add("Sparziel")
 tab1.grid_rowconfigure(0, weight=1)
 tab1.grid_columnconfigure(0, weight=1)
 
+# rows and columns in tab2
+tab1.grid_rowconfigure(0, weight=1)
+tab1.grid_columnconfigure(0, weight=1)
+
+# rows and columns in tab3
+tab1.grid_rowconfigure(0, weight=1)
+tab1.grid_columnconfigure(0, weight=1)
+
+# rows and columns in tab4
+tab1.grid_rowconfigure(0, weight=1)
+tab1.grid_columnconfigure(0, weight=1)
+
+# rows and columns in tab5
+tab1.grid_rowconfigure(0, weight=1)
+tab1.grid_columnconfigure(0, weight=1)
+
 # Überschrift
 label = ctk.CTkLabel(app, text="Finanz Tracker", font=("Arial", 35))
 label.grid(row=0, column=0, columnspan=5)
