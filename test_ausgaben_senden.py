@@ -6,4 +6,4 @@ with open("ausgaben.json", "r") as fh:
 print("Daten\n")
 
 for eintrag in ausgaben:
-    print(eintrag["produkt"], eintrag["Preis"], eintrag["Datum"])
+    print("Produkt: ", eintrag["produkt"], "/ Preis: ",eintrag["Preis"], "/ Datum: ",eintrag["Datum"])
