@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from tkinter import ttk
 
 # Auswahl zwischen dark/light und theme
 ctk.set_appearance_mode("dark")
@@ -45,20 +46,20 @@ tab1.grid_rowconfigure(0, weight=1)
 tab1.grid_columnconfigure(0, weight=1)
 
 # rows and columns in tab2
-tab1.grid_rowconfigure(0, weight=1)
-tab1.grid_columnconfigure(0, weight=1)
+tab2.grid_rowconfigure(0, weight=1)
+tab2.grid_columnconfigure(0, weight=1)
 
 # rows and columns in tab3
-tab1.grid_rowconfigure(0, weight=1)
-tab1.grid_columnconfigure(0, weight=1)
+tab3.grid_rowconfigure(0, weight=1)
+tab3.grid_columnconfigure(0, weight=1)
 
 # rows and columns in tab4
-tab1.grid_rowconfigure(0, weight=1)
-tab1.grid_columnconfigure(0, weight=1)
+tab4.grid_rowconfigure(0, weight=1)
+tab4.grid_columnconfigure(0, weight=1)
 
 # rows and columns in tab5
-tab1.grid_rowconfigure(0, weight=1)
-tab1.grid_columnconfigure(0, weight=1)
+tab5.grid_rowconfigure(0, weight=1)
+tab5.grid_columnconfigure(0, weight=1)
 
 # Überschrift
 label = ctk.CTkLabel(app, text="Finanz Tracker", font=("Arial", 35))
@@ -74,6 +75,11 @@ label = ctk.CTkLabel(
     corner_radius=8
 )
 label.grid(row=0, column=0,sticky ="ew")
+
+# Tabelle in Tab 2
+
+table = ttk.Treeview(tab2,columns = ("produkt", "preis", "datum"),show="headings")
+table.grid(row=0,column=0,sticky="nsew")
 
 # Run the application
 app.mainloop()
