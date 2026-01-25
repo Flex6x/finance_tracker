@@ -7,8 +7,8 @@ datum= int(input("Datum:    "))
 
 neu = {
     "produkt": produkt,
-    "Preis": preis,
-    "Datum": datum
+    "preis": preis,
+    "datum": datum
 }
 
 # Prüfung, ob .json und array existiert

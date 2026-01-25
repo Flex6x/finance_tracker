@@ -1,17 +1,22 @@
 [
     {
         "produkt": "essen",
-        "Preis": 3,
-        "Datum": 20260125
+        "preis": 3,
+        "datum": 20260125
     },
     {
         "produkt": "box",
-        "Preis": 23,
-        "Datum": 20260122
+        "preis": 23,
+        "datum": 20260122
     },
     {
         "produkt": "baum",
-        "Preis": 34,
-        "Datum": 20260124
+        "preis": 34,
+        "datum": 20260124
+    },
+    {
+        "produkt": "nigi",
+        "preis": 23,
+        "datum": 2050123
     }
 ]
