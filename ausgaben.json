@@ -5,23 +5,8 @@
         "datum": 20260125
     },
     {
-        "produkt": "box",
-        "preis": 23,
-        "datum": 20260122
-    },
-    {
-        "produkt": "baum",
-        "preis": 34,
-        "datum": 20260124
-    },
-    {
-        "produkt": "nigi",
-        "preis": 23,
-        "datum": 2050123
-    },
-    {
-        "produkt": "lennart",
-        "preis": 15,
-        "datum": 0
+        "produkt": "Banane",
+        "preis": "5",
+        "datum": "20260125"
     }
 ]
