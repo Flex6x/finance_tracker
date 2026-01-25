@@ -64,10 +64,7 @@ tab1.grid_columnconfigure(0, weight=1)
 label = ctk.CTkLabel(app, text="Finanz Tracker", font=("Arial", 35))
 label.grid(row=0, column=0, columnspan=5)
 
-def button_callback():
-    print ("Hallo")
-
-# Beschreibung in tab3 
+# Beschreibung in tab1
 label = ctk.CTkLabel(
     master=tab1,
     text="Willkommen zu Deinem persönlichen Finanztracker. Du kannst Ausgabelimits erstellen und deine Ausgaben tracken, Sparziele erstellen und schauen ob du diese einhälst und alles in Diagrammen übersichtlich darstellen.",
