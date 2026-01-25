@@ -10,6 +10,18 @@ app.title("Finanz Tracker")
 app.geometry("800x600")
 app.resizable(width=True, height =True) #Fenstereinstellungen skalierbar
 
+# Tabview
+tabview = ctk.CTkTabview(app)
+tabview.grid(row=1, column=0, columnspan=5, sticky="nsew")
+
+# Tabs 
+tab1=tabview.add("Ausgaben")
+tab2=tabview.add("Ausgabelimit")
+tab3=tabview.add("Startseite")
+tab4=tabview.add("Gespartes Geld")
+tab5=tabview.add("Sparziel")
+
+
 # Rows and Columns
 app.columnconfigure (0,weight=1)
 app.columnconfigure (1,weight=1)
@@ -28,67 +40,6 @@ label.grid(row=0, column=0, columnspan=5)
 def button_callback():
     print ("Hallo")
 
-# Buttons
-button1 = ctk.CTkButton(
-    master=app,
-    text="Click Me",
-    command=button_callback,
-    width=200,
-    height=50,
-    border_width=0,
-    corner_radius=8,
-    hover=True
-)
-button1.grid(row=1, column=0, padx=15, pady=10, sticky ="nwe")
-
-button2 = ctk.CTkButton(
-    master=app,
-    text="Click Me",
-    command=button_callback,
-    width=200,
-    height=50,
-    border_width=0,
-    corner_radius=8,
-    hover=True
-)
-button2.grid(row=1, column=1, padx=15, pady=10, sticky ="nwe")
-
-button3 = ctk.CTkButton(
-    master=app,
-    text="Click Me",
-    command=button_callback,
-    width=200,
-    height=50,
-    border_width=0,
-    corner_radius=8,
-    hover=True
-)
-button3.grid(row=1, column=2, padx=15, pady=10, sticky ="nwe")
-
-button4 = ctk.CTkButton(
-    master=app,
-    text="Click Me",
-    command=button_callback,
-    width=200,
-    height=50,
-    border_width=0,
-    corner_radius=8,
-    hover=True
-)
-button4.grid(row=1, column=3, padx=15, pady=10, sticky ="nwe")
-
-button4 = ctk.CTkButton(
-    master=app,
-    text="Click Me",
-    command=button_callback,
-    width=200,
-    height=50,
-    border_width=0,
-    corner_radius=8,
-    hover=True
-)
-button4.grid(row=1, column=4, padx=15, pady=10, sticky ="nwe")
-
 # Beschreibung 
 
 label = ctk.CTkLabel(
@@ -98,7 +49,7 @@ label = ctk.CTkLabel(
     text_color="white",
     corner_radius=8
 )
-label.grid(row=2, column=0,columnspan=5,sticky ="n")
+label.grid(row=2, column=0,columnspan=5)
 
 
 
