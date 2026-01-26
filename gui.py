@@ -66,7 +66,7 @@ tab2.grid_columnconfigure((0,1,2,3), weight=1)
 # rows and columns in tab3
 tab3.grid_rowconfigure((0,1), weight=1)
 tab3.grid_rowconfigure((2), weight=2)
-tab3.grid_columnconfigure((0,1,2), weight=1)
+tab3.grid_columnconfigure((0,1,2,3), weight=1)
 
 # rows and columns in tab4
 tab4.grid_rowconfigure(0, weight=1)
@@ -200,7 +200,7 @@ for eintrag in ausgaben:
 for i in range (len(produkte)):
     table.insert(parent="", index=i, values =(produkte[i], preise[i], datums[i]))
 
-# Text für tab2
+# Text für tab3
 label = ctk.CTkLabel(
     master=tab3,
     text="Hier kannst du dein monatliches Ausgabelimit eingeben. Wähle außerdem deinen aktuellen Monat aus. Es werden alle Ausgaben aus diesem Monat addiert.",
@@ -209,8 +209,50 @@ label = ctk.CTkLabel(
     text_color="white",
     corner_radius=8
 )
-label.grid(row=0, column=0,columnspan=3,sticky ="ew")
+label.grid(row=0, column=0,columnspan=4,sticky ="ew")
 
+# Funktionen für die Entrys
+monat_ausgewaehlt = ""
+jahr_ausgewaehlt = ""
+def answer_monat():
+    global monat_ausgewaehlt
+    monat_ausgewaehlt = entry_monat.get()
+def answer_jahr():
+    global jahr_ausgewaehlt
+    jahr_ausgewaehlt = entry_jahr.get()
+
+def send_y_m():
+    with open("ausgaben.json", "r") as fh:
+        ausgaben = json.load(fh)
+
+    preise_tab3=[]
+    datums_tab3=[]
+
+    for eintrag in ausgaben:
+        preise_tab3.append(eintrag["preis"])
+        datums_tab3.append(eintrag["datum"]) 
+
+    preis_monat=[] # Liste für alle Preise von Ausgaben in gewähltem Monat
+
+    # Monat wird ausgelesen, falls Monat mit gewähltem M. übereinstimmt wird der jeweilige Preis zur Liste hinzugefügt
+    for i in range (len(preise_tab3)):
+        z0 = str(datums_tab3[i])[0]
+        z1 = str(datums_tab3[i])[1]
+        z2 = str(datums_tab3[i])[2]
+        z3 = str(datums_tab3[i])[3]
+        zy = z0+z1+z2+z3
+        z4 = str(datums_tab3[i])[4]
+        z5 = str(datums_tab3[i])[5]
+        zm =z4+z5
+        if zm == monat_ausgewaehlt and zy == jahr_ausgewaehlt :
+            preis_monat.append(preise_tab3[i])
+
+    # Berechnung von gesamtem Preis in Monat
+    ausgaben_monat = 0
+
+    for i in range (len(preis_monat)):
+        ausgaben_monat += preis_monat[i]
+    print(ausgaben_monat)
 # Buttons in tab3
 
 entry_ausgabelimit = ttk.Entry(tab3)
@@ -220,13 +262,16 @@ button_ausgabelimit.grid(row=1, column=0,sticky="e")
 
 entry_monat = ttk.Entry(tab3)
 entry_monat.grid (row =1, column=1)
-button_monat=ttk.Button(tab3,text="<<-- Monat", command =answer_produkt)
+button_monat=ttk.Button(tab3,text="<<-- Monat", command =answer_monat)
 button_monat.grid(row=1, column=1,sticky="e")
 
 entry_jahr = ttk.Entry(tab3)
 entry_jahr.grid (row =1, column=2)
-button_jahr=ttk.Button(tab3,text="<<-- Jahr", command =answer_produkt)
+button_jahr=ttk.Button(tab3,text="<<-- Jahr", command =answer_jahr)
 button_jahr.grid(row=1, column=2,sticky="e")
+
+button_send_y_m=ttk.Button(tab3,text="<<-- Start", command =send_y_m)
+button_send_y_m.grid(row=1, column=3,sticky="e")
 
 # Run the application
 app.mainloop()
