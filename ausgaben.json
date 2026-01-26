@@ -1,12 +1,27 @@
 [
     {
         "produkt": "Apfel",
-        "preis": "2",
-        "datum": "20260126"
+        "preis": 2,
+        "datum": 20260126
     },
     {
         "produkt": "Bananen",
-        "preis": "3",
+        "preis": 3,
         "datum": 20260126
+    },
+    {
+        "produkt": "PC",
+        "preis": 30,
+        "datum": 20260213
+    },
+    {
+        "produkt": "Hefter",
+        "preis": 5,
+        "datum": 20260113
+    },
+    {
+        "produkt": "Box",
+        "preis": 7,
+        "datum": 20260127
     }
 ]

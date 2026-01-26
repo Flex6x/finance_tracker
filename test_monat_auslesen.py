@@ -3,7 +3,6 @@ import json
 with open("ausgaben.json", "r") as fh:
     ausgaben = json.load(fh)
 
-produkte=[]
 preise=[]
 datums=[]
 
@@ -11,20 +10,20 @@ for eintrag in ausgaben:
     preise.append(eintrag["preis"])
     datums.append(eintrag["datum"]) 
 
-monat=[]
+preis_monat=[] # Liste für alle Preise von Ausgaben in gewähltem Monat
+monat_ausgewählt = "01" # Monat auswählen
 
-
-
+# Monat wird ausgelesen, falls Monat mit gewähltem M. übereinstimmt wird der jeweilige Preis zur Liste hinzugefügt
 for i in range (len(preise)):
-    z3 = str(datums[i])[4]
-    z4 = str(datums[i])[5]
-    z=z3+z4
-    monat.append(z)
-print(monat)
+    z4 = str(datums[i])[4]
+    z5 = str(datums[i])[5]
+    z=z4+z5
+    if z == monat_ausgewählt:
+        preis_monat.append(preise[i])
 
+# Berechnung von gesamtem Preis in Monat
+ausgaben_monat = 0
 
-#for i in range (len(preise)):
-    #z3 = (datums[i] // 1000) % 10
-    #z4 = (datums[i] // 100) % 10
-    #monat.append(z3,z4)
-    #print(monat)
+for i in range (len(preis_monat)):
+    ausgaben_monat += preis_monat[i]
+print(ausgaben_monat)
