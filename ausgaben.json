@@ -20,8 +20,13 @@
         "datum": 20260113
     },
     {
-        "produkt": "Box",
-        "preis": 7,
-        "datum": 20260127
+        "produkt": "Döner",
+        "preis": 10,
+        "datum": 20250101
+    },
+    {
+        "produkt": "Pizza",
+        "preis": 20,
+        "datum": 20260105
     }
 ]

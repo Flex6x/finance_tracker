@@ -66,7 +66,7 @@ tab2.grid_columnconfigure((0,1,2,3), weight=1)
 # rows and columns in tab3
 tab3.grid_rowconfigure((0,1), weight=1)
 tab3.grid_rowconfigure((2), weight=2)
-tab3.grid_columnconfigure((0,1,2,3), weight=1)
+tab3.grid_columnconfigure((0,1,2), weight=1)
 
 # rows and columns in tab4
 tab4.grid_rowconfigure(0, weight=1)
@@ -209,17 +209,24 @@ label = ctk.CTkLabel(
     text_color="white",
     corner_radius=8
 )
-label.grid(row=0, column=0,columnspan=4,sticky ="ew")
+label.grid(row=0, column=0,columnspan=3,sticky ="ew")
+
+# Buttons in tab3
 
 entry_ausgabelimit = ttk.Entry(tab3)
 entry_ausgabelimit.grid (row =1, column=0)
 button_ausgabelimit=ttk.Button(tab3,text="<<-- Ausgabelimit in €", command =answer_produkt)
-button_ausgabelimit.grid(row=1, column=1,sticky="w")
+button_ausgabelimit.grid(row=1, column=0,sticky="e")
 
 entry_monat = ttk.Entry(tab3)
-entry_monat.grid (row =1, column=2)
+entry_monat.grid (row =1, column=1)
 button_monat=ttk.Button(tab3,text="<<-- Monat", command =answer_produkt)
-button_monat.grid(row=1, column=3,sticky="w")
+button_monat.grid(row=1, column=1,sticky="e")
+
+entry_jahr = ttk.Entry(tab3)
+entry_jahr.grid (row =1, column=2)
+button_jahr=ttk.Button(tab3,text="<<-- Jahr", command =answer_produkt)
+button_jahr.grid(row=1, column=2,sticky="e")
 
 # Run the application
 app.mainloop()
