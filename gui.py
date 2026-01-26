@@ -214,6 +214,10 @@ label.grid(row=0, column=0,columnspan=4,sticky ="ew")
 # Funktionen für die Entrys
 monat_ausgewaehlt = ""
 jahr_ausgewaehlt = ""
+def answer_ausgabelimit():
+    global ausgabelimit
+    limit = entry_ausgabelimit.get()
+    ausgabelimit= int(limit)
 def answer_monat():
     global monat_ausgewaehlt
     monat_ausgewaehlt = entry_monat.get()
@@ -249,15 +253,19 @@ def send_y_m():
 
     # Berechnung von gesamtem Preis in Monat
     ausgaben_monat = 0
+    global ausgabenbilanz
 
     for i in range (len(preis_monat)):
         ausgaben_monat += preis_monat[i]
-    print(ausgaben_monat)
+    ausgabenbilanz = ausgabelimit - ausgaben_monat
+    print("Ausgaben im Monat",monat_ausgewaehlt,"in",jahr_ausgewaehlt,":   ",ausgaben_monat)
+    print("Ausgabelimit in diesem Monat:   ", ausgabelimit)
+    print ("Bilanz diesen Monat:   ",ausgabenbilanz)
 # Buttons in tab3
 
 entry_ausgabelimit = ttk.Entry(tab3)
 entry_ausgabelimit.grid (row =1, column=0)
-button_ausgabelimit=ttk.Button(tab3,text="<<-- Ausgabelimit in €", command =answer_produkt)
+button_ausgabelimit=ttk.Button(tab3,text="<<-- Ausgabelimit in €", command =answer_ausgabelimit)
 button_ausgabelimit.grid(row=1, column=0,sticky="e")
 
 entry_monat = ttk.Entry(tab3)
@@ -270,7 +278,7 @@ entry_jahr.grid (row =1, column=2)
 button_jahr=ttk.Button(tab3,text="<<-- Jahr", command =answer_jahr)
 button_jahr.grid(row=1, column=2,sticky="e")
 
-button_send_y_m=ttk.Button(tab3,text="<<-- Start", command =send_y_m)
+button_send_y_m=ttk.Button(tab3,text="Start", command =send_y_m)
 button_send_y_m.grid(row=1, column=3,sticky="e")
 
 # Run the application

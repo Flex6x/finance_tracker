@@ -23,10 +23,5 @@
         "produkt": "Doener",
         "preis": 10,
         "datum": 20250101
-    },
-    {
-        "produkt": "Pizza",
-        "preis": 20,
-        "datum": 20260105
     }
 ]
