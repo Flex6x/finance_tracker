@@ -23,5 +23,10 @@
         "produkt": "Doener",
         "preis": 10,
         "datum": 20250101
+    },
+    {
+        "produkt": "Laptop",
+        "preis": 90,
+        "datum": 20260223
     }
 ]

@@ -261,6 +261,9 @@ def send_y_m():
     print("Ausgaben im Monat",monat_ausgewaehlt,"in",jahr_ausgewaehlt,":   ",ausgaben_monat)
     print("Ausgabelimit in diesem Monat:   ", ausgabelimit)
     print ("Bilanz diesen Monat:   ",ausgabenbilanz)
+    if ausgabenbilanz <0:
+        w = abs(ausgabelimit)
+        print ("!!Warnung!! Du hast dein Ausgabelimit um ",w, "überschritten! Keine Ausgaben mehr!")
 # Buttons in tab3
 
 entry_ausgabelimit = ttk.Entry(tab3)
