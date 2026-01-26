@@ -123,6 +123,16 @@ def save_ausgabe():
         with open("ausgaben.json", "w", encoding="utf-8") as datei:
             json.dump(daten, datei, indent=4, ensure_ascii=False)
 
+def ausgabe_löschen():
+    with open("ausgaben.json", "r", encoding="utf-8") as f:
+        daten = json.load(f)
+
+    # letzten Datensatz entfernen
+    daten.pop()
+
+    with open("ausgaben.json", "w", encoding="utf-8") as f:
+        json.dump(daten, f, indent=4)
+
 
 # Entry zu Produkt
 entry_produkt = ttk.Entry(tab2)
@@ -142,8 +152,13 @@ entry_datum.grid (row =0, column=2,sticky="w")
 button_datum=ttk.Button(tab2,text="<<-- Datum in YYYYMMDD", command =answer_datum)
 button_datum.grid(row=0, column=2,sticky="e")
 
+# Save button
 button_save_ausgabe=ttk.Button(tab2,text="start",command =save_ausgabe)
-button_save_ausgabe.grid(row=0, column=3,sticky="ew")
+button_save_ausgabe.grid(row=0, column=3,sticky="w")
+
+# Lösch Button
+button_save_ausgabe=ttk.Button(tab2,text="Letzten Eintrag löschen",command =ausgabe_löschen)
+button_save_ausgabe.grid(row=0, column=3,sticky="e")
 
 # Tabelle in Tab 2 anlegen
 
