@@ -13,6 +13,18 @@ app.title("Finanz Tracker")
 app.geometry("1040x800")
 app.resizable(width=True, height =True) #Fenstereinstellungen skalierbar
 
+# Größe von Text in Tabelle - in Zellen
+style = ttk.Style()
+style.configure(
+    "Treeview",
+    font=("Arial", 15)   # Schriftart, Schriftgröße
+)
+# in Übeschriften
+style.configure(
+    "Treeview.Heading",
+    font=("Arial", 15, "bold")
+)
+
 # Rows and Columns in app
 app.columnconfigure (0,weight=1)
 app.columnconfigure (1,weight=1)
@@ -23,7 +35,6 @@ app.columnconfigure (4,weight=1)
 app.rowconfigure (0,weight=1)
 app.rowconfigure (1,weight=1)
 app.rowconfigure (2,weight=5)
-app.rowconfigure (3,weight=2)
 
 
 # Tabview
@@ -122,6 +133,7 @@ def save_ausgabe():
         # Anhang wird ausgeführt
         with open("ausgaben.json", "w", encoding="utf-8") as datei:
             json.dump(daten, datei, indent=4, ensure_ascii=False)
+        table.insert(parent="", index=ctk.END, values =(produkt, preis, datum)) # Tabelle bei neuem Eintrag direkt updaten
 
 def ausgabe_löschen():
     with open("ausgaben.json", "r", encoding="utf-8") as f:
@@ -132,7 +144,8 @@ def ausgabe_löschen():
 
     with open("ausgaben.json", "w", encoding="utf-8") as f:
         json.dump(daten, f, indent=4)
-
+    items = table.get_children()
+    table.delete(items[-1])
 
 # Entry zu Produkt
 entry_produkt = ttk.Entry(tab2)
@@ -180,11 +193,11 @@ datums=[]
 for eintrag in ausgaben:
     produkte.append(eintrag["produkt"])
     preise.append(eintrag["preis"])
-    datums.append(eintrag["datum"])
+    datums.append(eintrag["datum"]) 
 
-#Einträge eintragen
+# Einträge eintragen
 for i in range (len(produkte)):
-    table.insert(parent="", index=i, values =(produkte[i], preise[i], datums[i])) 
+    table.insert(parent="", index=i, values =(produkte[i], preise[i], datums[i]))
 
 # Run the application
 app.mainloop()
