@@ -3,5 +3,10 @@
         "produkt": "Apfel",
         "preis": "2",
         "datum": "20260126"
+    },
+    {
+        "produkt": "Bananen",
+        "preis": "3",
+        "datum": 20260126
     }
 ]

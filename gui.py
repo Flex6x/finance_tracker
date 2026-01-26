@@ -64,8 +64,9 @@ tab2.grid_rowconfigure(1, weight=3)
 tab2.grid_columnconfigure((0,1,2,3), weight=1)
 
 # rows and columns in tab3
-tab3.grid_rowconfigure(0, weight=1)
-tab3.grid_columnconfigure(0, weight=1)
+tab3.grid_rowconfigure((0,1), weight=1)
+tab3.grid_rowconfigure((2), weight=2)
+tab3.grid_columnconfigure((0,1,2,3), weight=1)
 
 # rows and columns in tab4
 tab4.grid_rowconfigure(0, weight=1)
@@ -99,10 +100,10 @@ def answer_produkt():
     produkt = entry_produkt.get()
 def answer_preis():
     global preis
-    preis = entry_preis.get()
+    preis = int(entry_preis.get())
 def answer_datum():
     global datum
-    datum = entry_datum.get()
+    datum = int(entry_datum.get())
 
 def save_ausgabe():
     if produkt == "" or preis == "" or datum == "": # Neuer Eintrag nur wenn alle Felder gefüllt sind
@@ -198,6 +199,27 @@ for eintrag in ausgaben:
 # Einträge eintragen
 for i in range (len(produkte)):
     table.insert(parent="", index=i, values =(produkte[i], preise[i], datums[i]))
+
+# Text für tab2
+label = ctk.CTkLabel(
+    master=tab3,
+    text="Hier kannst du dein monatliches Ausgabelimit eingeben. Wähle außerdem deinen aktuellen Monat aus. Es werden alle Ausgaben aus diesem Monat addiert.",
+    wraplength=600, #mit automatischem Zeilenumbruch
+    font=("Arial", 20),
+    text_color="white",
+    corner_radius=8
+)
+label.grid(row=0, column=0,columnspan=4,sticky ="ew")
+
+entry_ausgabelimit = ttk.Entry(tab3)
+entry_ausgabelimit.grid (row =1, column=0)
+button_ausgabelimit=ttk.Button(tab3,text="<<-- Ausgabelimit in €", command =answer_produkt)
+button_ausgabelimit.grid(row=1, column=1,sticky="w")
+
+entry_monat = ttk.Entry(tab3)
+entry_monat.grid (row =1, column=2)
+button_monat=ttk.Button(tab3,text="<<-- Monat", command =answer_produkt)
+button_monat.grid(row=1, column=3,sticky="w")
 
 # Run the application
 app.mainloop()
