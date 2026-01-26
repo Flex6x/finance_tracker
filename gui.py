@@ -94,31 +94,34 @@ def answer_datum():
     datum = entry_datum.get()
 
 def save_ausgabe():
-    neu = {
-    "produkt": produkt,
-    "preis": preis,
-    "datum": datum
-}
-
-    # Prüfung, ob .json und array existiert
-
-    if os.path.exists("ausgaben.json"):
-        with open("ausgaben.json", "r", encoding="utf-8") as datei:
-            try:
-                daten = json.load(datei)
-                # falls ein einzelnes Objekt drinsteht, in Liste umwandeln
-                if isinstance(daten, dict):
-                    daten = [daten]
-            except json.JSONDecodeError:
-                daten = []
+    if produkt == "" or preis == "" or datum == "": # Neuer Eintrag nur wenn alle Felder gefüllt sind
+        print("Alle Felder müssen ausgefüllt sein!")
     else:
-        daten = []
+        neu = {
+        "produkt": produkt,
+        "preis": preis,
+        "datum": datum
+    }
 
-    daten.append(neu) # Eintrag wird der zu "daten hinzugefügt"
+        # Prüfung, ob .json und array existiert
 
-    # Anhang wird ausgeführt
-    with open("ausgaben.json", "w", encoding="utf-8") as datei:
-        json.dump(daten, datei, indent=4, ensure_ascii=False)
+        if os.path.exists("ausgaben.json"):
+            with open("ausgaben.json", "r", encoding="utf-8") as datei:
+                try:
+                    daten = json.load(datei)
+                    # falls ein einzelnes Objekt drinsteht, in Liste umwandeln
+                    if isinstance(daten, dict):
+                        daten = [daten]
+                except json.JSONDecodeError:
+                    daten = []
+        else:
+            daten = []
+
+        daten.append(neu) # Eintrag wird der zu "daten hinzugefügt"
+
+        # Anhang wird ausgeführt
+        with open("ausgaben.json", "w", encoding="utf-8") as datei:
+            json.dump(daten, datei, indent=4, ensure_ascii=False)
 
 
 # Entry zu Produkt
@@ -158,8 +161,6 @@ with open("ausgaben.json", "r") as fh:
 produkte=[]
 preise=[]
 datums=[]
-
-print("Daten\n")
 
 for eintrag in ausgaben:
     produkte.append(eintrag["produkt"])

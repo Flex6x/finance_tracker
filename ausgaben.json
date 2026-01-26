@@ -8,5 +8,20 @@
         "produkt": "Banane",
         "preis": "5",
         "datum": "20260125"
+    },
+    {
+        "produkt": "bam",
+        "preis": "30",
+        "datum": "20260125"
+    },
+    {
+        "produkt": "banan",
+        "preis": "23",
+        "datum": "20260126"
+    },
+    {
+        "produkt": "Baumhaus",
+        "preis": "444",
+        "datum": "20260126"
     }
 ]
