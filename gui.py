@@ -64,8 +64,9 @@ tab2.grid_rowconfigure(1, weight=3)
 tab2.grid_columnconfigure((0,1,2,3), weight=1)
 
 # rows and columns in tab3
-tab3.grid_rowconfigure((0,1), weight=1)
-tab3.grid_rowconfigure((2), weight=2)
+tab3.grid_rowconfigure(0, weight=7)
+tab3.grid_rowconfigure(1, weight=10)
+tab3.grid_rowconfigure((2), weight=20)
 tab3.grid_columnconfigure((0,1,2,3), weight=1)
 
 # rows and columns in tab4
@@ -84,7 +85,7 @@ label_ueberschrift.grid(row=0, column=0, columnspan=5)
 label_start = ctk.CTkLabel(
     master=tab1,
     text="Willkommen zu Deinem persönlichen Finanztracker. Du kannst Ausgabelimits erstellen und deine Ausgaben tracken, Sparziele erstellen und schauen ob du diese einhälst.",
-    wraplength=500, #mit automatischem Zeilenumbruch
+    wraplength=500, # mit automatischem Zeilenumbruch
     font=("Arial", 20),
     text_color="white",
     corner_radius=8
@@ -149,26 +150,26 @@ def ausgabe_löschen():
     table.delete(items[-1])
 
 # Entry zu Produkt
-entry_produkt = ttk.Entry(tab2)
-entry_produkt.grid (row =0, column=0,sticky="w")
+entry_produkt = ttk.Entry(tab2, font = ("Arial", 13))
+entry_produkt.grid (row =0, column=0,sticky="w",)
 button_produkt=ttk.Button(tab2,text="<<-- Produkt", command =answer_produkt)
-button_produkt.grid(row=0, column=0,sticky="e")
+button_produkt.grid(row=0, column=0,sticky="e", padx=(0,10))
 
 # Entry zu Preis
-entry_preis = ttk.Entry(tab2)
+entry_preis = ttk.Entry(tab2, font = ("Arial", 13))
 entry_preis.grid (row =0, column=1,sticky="w")
 button_preis=ttk.Button(tab2,text="<<-- Preis in €", command =answer_preis)
-button_preis.grid(row=0, column=1,sticky="e")
+button_preis.grid(row=0, column=1,sticky="e", padx=(0,10))
 
 # Entry zu Datum
-entry_datum = ttk.Entry(tab2)
+entry_datum = ttk.Entry(tab2, font = ("Arial", 13))
 entry_datum.grid (row =0, column=2,sticky="w")
 button_datum=ttk.Button(tab2,text="<<-- Datum in YYYYMMDD", command =answer_datum)
-button_datum.grid(row=0, column=2,sticky="e")
+button_datum.grid(row=0, column=2,sticky="e", padx=(130,0))
 
 # Save button
 button_save_ausgabe=ttk.Button(tab2,text="start",command =save_ausgabe)
-button_save_ausgabe.grid(row=0, column=3,sticky="w")
+button_save_ausgabe.grid(row=0, column=3,sticky="w", padx=(22,0))
 
 # Lösch Button
 button_save_ausgabe=ttk.Button(tab2,text="Letzten Eintrag löschen",command =ausgabe_löschen)
@@ -203,7 +204,7 @@ for i in range (len(produkte)):
 # Text für tab3
 label_tab3_beschreibung = ctk.CTkLabel(
     master=tab3,
-    text="Hier kannst du dein monatliches Ausgabelimit eingeben. Wähle außerdem deinen aktuellen Monat aus. Es werden alle Ausgaben aus diesem Monat addiert.",
+    text="Hier kannst du dein monatliches Ausgabelimit eingeben. Wähle außerdem deinen aktuellen Monat und Jahr aus. Es werden alle Ausgaben aus diesem Monat addiert.",
     wraplength=600, #mit automatischem Zeilenumbruch
     font=("Arial", 20),
     text_color="white",
@@ -261,32 +262,26 @@ def send_y_m():
     for i in range (len(preis_monat)):
         ausgaben_monat += preis_monat[i]
     ausgabenbilanz = ausgabelimit - ausgaben_monat
-    print("Ausgaben im Monat",monat_ausgewaehlt,"in",jahr_ausgewaehlt,":   ",ausgaben_monat)
-    print("Ausgabelimit in diesem Monat:   ", ausgabelimit)
-    print ("Bilanz diesen Monat:   ",ausgabenbilanz)
-    if ausgabenbilanz <0:
-        w = abs(ausgabelimit) # Ausgabelimit als Betrag
-        print ("!!Warnung!! Du hast dein Ausgabelimit um ",w, "überschritten! Keine Ausgaben mehr!")
     update_label_ausgaben_m()
 
 # Buttons in tab3
-entry_ausgabelimit = ttk.Entry(tab3)
-entry_ausgabelimit.grid (row =1, column=0)
+entry_ausgabelimit = ttk.Entry(tab3, font = ("Arial", 15))
+entry_ausgabelimit.grid (row =1, column=0, sticky="w")
 button_ausgabelimit=ttk.Button(tab3,text="<<-- Ausgabelimit in €", command =answer_ausgabelimit)
-button_ausgabelimit.grid(row=1, column=0,sticky="e")
+button_ausgabelimit.grid(row=1, column=0, padx=(200, 0))
 
-entry_monat = ttk.Entry(tab3)
-entry_monat.grid (row =1, column=1)
+entry_monat = ttk.Entry(tab3, font = ("Arial", 15))
+entry_monat.grid (row =1, column=1,sticky="w")
 button_monat=ttk.Button(tab3,text="<<-- Monat", command =answer_monat)
-button_monat.grid(row=1, column=1,sticky="e")
+button_monat.grid(row=1, column=1, padx=(200, 0))
 
-entry_jahr = ttk.Entry(tab3)
-entry_jahr.grid (row =1, column=2)
+entry_jahr = ttk.Entry(tab3, font = ("Arial", 15))
+entry_jahr.grid (row =1, column=2,sticky ="w")
 button_jahr=ttk.Button(tab3,text="<<-- Jahr", command =answer_jahr)
-button_jahr.grid(row=1, column=2,sticky="e")
+button_jahr.grid(row=1, column=2, padx=(200, 0))
 
 button_send_y_m=ttk.Button(tab3,text="Start", command =send_y_m)
-button_send_y_m.grid(row=1, column=3,sticky="e")
+button_send_y_m.grid(row=1, column=3)
 
 # Ausgabe von Ausgabelimit im jew. Monat
 
@@ -314,7 +309,7 @@ if ausgaben_monat is None:
 else:
     ausgaben_monat.trace_add("write", update_label_ausgaben_m)
 
-label_ausgabenbilanz = ttk.Label(tab3, textvariable=label_text, font=("Arial", 20),)
+label_ausgabenbilanz = ttk.Label(tab3, textvariable=label_text, font=("Arial", 30),)
 label_ausgabenbilanz.grid(row=2, column=0,columnspan=4)
 
 update_label_ausgaben_m()
