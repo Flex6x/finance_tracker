@@ -70,8 +70,10 @@ tab3.grid_rowconfigure((2), weight=20)
 tab3.grid_columnconfigure((0,1,2,3), weight=1)
 
 # rows and columns in tab4
-tab4.grid_rowconfigure(0, weight=1)
-tab4.grid_columnconfigure(0, weight=1)
+tab4.grid_rowconfigure(0, weight=7)
+tab4.grid_rowconfigure(1, weight=10)
+tab4.grid_rowconfigure((2), weight=20)
+tab4.grid_columnconfigure((0,1,2), weight=1)
 
 # rows and columns in tab5
 tab5.grid_rowconfigure(0, weight=1)
@@ -101,7 +103,7 @@ def answer_produkt():
     produkt = entry_produkt.get()
 def answer_preis():
     global preis
-    preis = int(entry_preis.get())
+    preis = float(entry_preis.get())
 def answer_datum():
     global datum
     datum = int(entry_datum.get())
@@ -374,6 +376,18 @@ ausgaben_monat = int(lade_wert_ausgaben_monat())
 monat_ausgewaehlt = str(lade_wert_monat())
 jahr_ausgewaehlt = str(lade_wert_jahr())
 update_label_ausgaben_m()
+
+# Text für tab4
+label_tab4_beschreibung = ctk.CTkLabel(
+    master=tab4,
+    text="Hier kannst du alle deine gesparten Geldbeträge mit jeweiligem Datum eintragen. Dir erhälst auf Basis von deinem Sparziel Vorschläge, wie viel Geld du für dieses jede Woche bei Seite legen muss.",
+    wraplength=600, #mit automatischem Zeilenumbruch
+    font=("Arial", 20),
+    text_color="white",
+    corner_radius=8
+)
+label_tab4_beschreibung.grid(row=0, column=0,columnspan=4,sticky ="ew")
+
 
 # Run the application
 app.mainloop()
