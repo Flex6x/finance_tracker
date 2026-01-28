@@ -83,7 +83,7 @@ label_ueberschrift.grid(row=0, column=0, columnspan=5)
 # Beschreibung in tab1
 label_start = ctk.CTkLabel(
     master=tab1,
-    text="Willkommen zu Deinem persönlichen Finanztracker. Du kannst Ausgabelimits erstellen und deine Ausgaben tracken, Sparziele erstellen und schauen ob du diese einhälst und alles in Diagrammen übersichtlich darstellen.",
+    text="Willkommen zu Deinem persönlichen Finanztracker. Du kannst Ausgabelimits erstellen und deine Ausgaben tracken, Sparziele erstellen und schauen ob du diese einhälst.",
     wraplength=500, #mit automatischem Zeilenumbruch
     font=("Arial", 20),
     text_color="white",
@@ -226,6 +226,7 @@ def answer_jahr():
     jahr_ausgewaehlt = entry_jahr.get()
 
 ausgaben_monat = None
+ausgabenbilanz = None
 def send_y_m():
     with open("ausgaben.json", "r") as fh:
         ausgaben = json.load(fh)
@@ -266,7 +267,7 @@ def send_y_m():
     if ausgabenbilanz <0:
         w = abs(ausgabelimit) # Ausgabelimit als Betrag
         print ("!!Warnung!! Du hast dein Ausgabelimit um ",w, "überschritten! Keine Ausgaben mehr!")
-    update_label()
+    update_label_ausgaben_m()
 
 # Buttons in tab3
 entry_ausgabelimit = ttk.Entry(tab3)
@@ -291,20 +292,32 @@ button_send_y_m.grid(row=1, column=3,sticky="e")
 
 label_text = ctk.StringVar()
 
-def update_label():
+def update_label_ausgaben_m():
+    bilanzinfo = ""
+    ab = ausgabenbilanz
+    if ausgabenbilanz is None:
+        pass
+    else:
+        if ab > 0:
+            bilanzinfo = f"Sehr gut! Du hast noch {ab}€ übrig."
+        elif ab == 0:
+            bilanzinfo = f"Achtung! Du hast dein Ausgabenlimit erreicht"
+        else:
+            bilanzinfo = f"!!Warnung!! Du hast dein Ausgabelimit um {ab}€ überschritten! Keine Ausgaben mehr!"
+
     if ausgaben_monat is None:
         pass
     else:
-        label_text.set(f"Deine Ausgaben im Monat {monat_ausgewaehlt} in {jahr_ausgewaehlt}: {ausgaben_monat}€.")
+        label_text.set(f"Deine Ausgaben im Monat {monat_ausgewaehlt} in {jahr_ausgewaehlt}: {ausgaben_monat}€. \nAusgabelimit im Monat {monat_ausgewaehlt}: {ausgabelimit}€ \nBilanz im Monat {monat_ausgewaehlt}: {ausgabenbilanz}€\n{bilanzinfo}")
 if ausgaben_monat is None:
     pass
 else:
-    ausgaben_monat.trace_add("write", update_label)
+    ausgaben_monat.trace_add("write", update_label_ausgaben_m)
 
 label_ausgabenbilanz = ttk.Label(tab3, textvariable=label_text, font=("Arial", 20),)
 label_ausgabenbilanz.grid(row=2, column=0,columnspan=4)
 
-update_label()
+update_label_ausgaben_m()
 
 # Run the application
 app.mainloop()
