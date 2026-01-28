@@ -136,6 +136,7 @@ def save_ausgabe():
         with open("ausgaben.json", "w", encoding="utf-8") as datei:
             json.dump(daten, datei, indent=4, ensure_ascii=False)
         table.insert(parent="", index=ctk.END, values =(produkt, preis, datum)) # Tabelle bei neuem Eintrag direkt updaten
+        update_label_ausgaben_m() # Update der Ausgaben in tab3
 
 def ausgabe_löschen():
     with open("ausgaben.json", "r", encoding="utf-8") as f:
@@ -148,6 +149,7 @@ def ausgabe_löschen():
         json.dump(daten, f, indent=4)
     items = table.get_children()
     table.delete(items[-1])
+    update_label_ausgaben_m() # Update der Ausgaben in tab3
 
 # Entry zu Produkt
 entry_produkt = ttk.Entry(tab2, font = ("Arial", 13))
@@ -221,7 +223,7 @@ def answer_ausgabelimit():
     speichere_wert_al ()
 def answer_monat():
     global monat_ausgewaehlt
-    monat_ausgewaehlt = entry_monat.get()
+    monat_ausgewaehlt = str(entry_monat.get())
     speichere_wert_monat()
 def answer_jahr():
     global jahr_ausgewaehlt
@@ -352,7 +354,7 @@ def update_label_ausgaben_m():
         elif ab == 0:
             bilanzinfo = f"Achtung! Du hast dein Ausgabenlimit erreicht"
         else:
-            bilanzinfo = f"!!Warnung!! Du hast dein Ausgabelimit um {ab}€ überschritten! \nKeine Ausgaben mehr!"
+            bilanzinfo = f"!!Warnung!! Du hast dein Ausgabelimit um {abs(ab)}€ überschritten! \nKeine Ausgaben mehr!"
 
     if ausgaben_monat is None:
         pass
@@ -369,8 +371,8 @@ label_ausgabenbilanz.grid(row=2, column=0,columnspan=4)
 ausgabelimit = int(lade_wert_al())
 ausgabenbilanz = int(lade_wert_bilanz())
 ausgaben_monat = int(lade_wert_ausgaben_monat())
-monat_ausgewaehlt = int(lade_wert_monat())
-jahr_ausgewaehlt = int(lade_wert_jahr())
+monat_ausgewaehlt = str(lade_wert_monat())
+jahr_ausgewaehlt = str(lade_wert_jahr())
 update_label_ausgaben_m()
 
 # Run the application
