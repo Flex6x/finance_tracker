@@ -213,18 +213,20 @@ label_tab3_beschreibung = ctk.CTkLabel(
 label_tab3_beschreibung.grid(row=0, column=0,columnspan=4,sticky ="ew")
 
 # Funktionen für die Entrys
-monat_ausgewaehlt = ""
-jahr_ausgewaehlt = ""
 def answer_ausgabelimit():
+    global limit
     global ausgabelimit
     limit = entry_ausgabelimit.get()
-    ausgabelimit= int(limit)
+    ausgabelimit = int(limit)
+    speichere_wert_al ()
 def answer_monat():
     global monat_ausgewaehlt
     monat_ausgewaehlt = entry_monat.get()
+    speichere_wert_monat()
 def answer_jahr():
     global jahr_ausgewaehlt
     jahr_ausgewaehlt = entry_jahr.get()
+    speichere_wert_jahr()
 
 ausgaben_monat = None
 ausgabenbilanz = None
@@ -256,12 +258,17 @@ def send_y_m():
 
     # Berechnung von gesamtem Preis der Ausgaben in Monat
     global ausgaben_monat
-    ausgaben_monat = 0
     global ausgabenbilanz
-
+    global ausgabenbilanz_str
+    global ausgaben_monat_str
+    ausgaben_monat = 0
     for i in range (len(preis_monat)):
         ausgaben_monat += preis_monat[i]
+    ausgaben_monat_str = str(ausgaben_monat)
+    speichere_wert_ausgaben_monat()
     ausgabenbilanz = ausgabelimit - ausgaben_monat
+    ausgabenbilanz_str = str(ausgabenbilanz)
+    speichere_wert_bilanz()
     update_label_ausgaben_m()
 
 # Buttons in tab3
@@ -287,6 +294,53 @@ button_send_y_m.grid(row=1, column=3)
 
 label_text = ctk.StringVar()
 
+datei_al = "ausgabelimit_datei.txt"
+def lade_wert_al():
+    if os.path.exists(datei_al):
+        with open(datei_al, "r") as f:
+            return int(f.read())
+    return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
+datei_m_g = "monat_ausg.txt"
+def lade_wert_monat():
+    if os.path.exists(datei_m_g):
+        with open(datei_m_g, "r") as f:
+            return int(f.read())
+    return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
+datei_j_g = "jahr_ausg.txt"
+def lade_wert_jahr():
+    if os.path.exists(datei_j_g):
+        with open(datei_j_g, "r") as f:
+            return int(f.read())
+    return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
+datei_ab = "ausgabenbilanz_datei.txt"
+def lade_wert_bilanz():
+    if os.path.exists(datei_ab):
+        with open(datei_ab, "r") as f:
+            return int(f.read())
+    return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
+datei_am = "ausgaben_monat_datei.txt"
+def lade_wert_ausgaben_monat():
+    if os.path.exists(datei_am):
+        with open(datei_am, "r") as f:
+            return int(f.read())
+    return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
+
+def speichere_wert_al():
+    with open(datei_al, "w") as f:
+        f.write(limit)
+def speichere_wert_monat():
+    with open(datei_m_g, "w") as f:
+        f.write(monat_ausgewaehlt)
+def speichere_wert_jahr():
+    with open(datei_j_g, "w") as f:
+        f.write(jahr_ausgewaehlt)
+def speichere_wert_bilanz():
+    with open(datei_ab, "w") as f:
+        f.write(ausgabenbilanz_str)
+def speichere_wert_ausgaben_monat():
+    with open(datei_am, "w") as f:
+        f.write(ausgaben_monat_str)
+
 def update_label_ausgaben_m():
     bilanzinfo = ""
     ab = ausgabenbilanz
@@ -298,7 +352,7 @@ def update_label_ausgaben_m():
         elif ab == 0:
             bilanzinfo = f"Achtung! Du hast dein Ausgabenlimit erreicht"
         else:
-            bilanzinfo = f"!!Warnung!! Du hast dein Ausgabelimit um {ab}€ überschritten! Keine Ausgaben mehr!"
+            bilanzinfo = f"!!Warnung!! Du hast dein Ausgabelimit um {ab}€ überschritten! \nKeine Ausgaben mehr!"
 
     if ausgaben_monat is None:
         pass
@@ -309,9 +363,14 @@ if ausgaben_monat is None:
 else:
     ausgaben_monat.trace_add("write", update_label_ausgaben_m)
 
-label_ausgabenbilanz = ttk.Label(tab3, textvariable=label_text, font=("Arial", 30),)
+label_ausgabenbilanz = ttk.Label(tab3, textvariable=label_text, font=("Arial", 30))
 label_ausgabenbilanz.grid(row=2, column=0,columnspan=4)
 
+ausgabelimit = int(lade_wert_al())
+ausgabenbilanz = int(lade_wert_bilanz())
+ausgaben_monat = int(lade_wert_ausgaben_monat())
+monat_ausgewaehlt = int(lade_wert_monat())
+jahr_ausgewaehlt = int(lade_wert_jahr())
 update_label_ausgaben_m()
 
 # Run the application
