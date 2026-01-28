@@ -77,11 +77,11 @@ tab5.grid_rowconfigure(0, weight=1)
 tab5.grid_columnconfigure(0, weight=1)
 
 # Überschrift
-label = ctk.CTkLabel(app, text="Finanz Tracker", font=("Arial", 35))
-label.grid(row=0, column=0, columnspan=5)
+label_ueberschrift = ctk.CTkLabel(app, text="Finanz Tracker", font=("Arial", 35))
+label_ueberschrift.grid(row=0, column=0, columnspan=5)
 
 # Beschreibung in tab1
-label = ctk.CTkLabel(
+label_start = ctk.CTkLabel(
     master=tab1,
     text="Willkommen zu Deinem persönlichen Finanztracker. Du kannst Ausgabelimits erstellen und deine Ausgaben tracken, Sparziele erstellen und schauen ob du diese einhälst und alles in Diagrammen übersichtlich darstellen.",
     wraplength=500, #mit automatischem Zeilenumbruch
@@ -89,7 +89,7 @@ label = ctk.CTkLabel(
     text_color="white",
     corner_radius=8
 )
-label.grid(row=0, column=0,sticky ="ew")
+label_start.grid(row=0, column=0,sticky ="ew")
 
 # Funktionen für die Entrys
 produkt=""
@@ -201,7 +201,7 @@ for i in range (len(produkte)):
     table.insert(parent="", index=i, values =(produkte[i], preise[i], datums[i]))
 
 # Text für tab3
-label = ctk.CTkLabel(
+label_tab3_beschreibung = ctk.CTkLabel(
     master=tab3,
     text="Hier kannst du dein monatliches Ausgabelimit eingeben. Wähle außerdem deinen aktuellen Monat aus. Es werden alle Ausgaben aus diesem Monat addiert.",
     wraplength=600, #mit automatischem Zeilenumbruch
@@ -209,7 +209,7 @@ label = ctk.CTkLabel(
     text_color="white",
     corner_radius=8
 )
-label.grid(row=0, column=0,columnspan=4,sticky ="ew")
+label_tab3_beschreibung.grid(row=0, column=0,columnspan=4,sticky ="ew")
 
 # Funktionen für die Entrys
 monat_ausgewaehlt = ""
@@ -225,6 +225,7 @@ def answer_jahr():
     global jahr_ausgewaehlt
     jahr_ausgewaehlt = entry_jahr.get()
 
+ausgaben_monat = None
 def send_y_m():
     with open("ausgaben.json", "r") as fh:
         ausgaben = json.load(fh)
@@ -251,7 +252,8 @@ def send_y_m():
         if zm == monat_ausgewaehlt and zy == jahr_ausgewaehlt :
             preis_monat.append(preise_tab3[i])
 
-    # Berechnung von gesamtem Preis in Monat
+    # Berechnung von gesamtem Preis der Ausgaben in Monat
+    global ausgaben_monat
     ausgaben_monat = 0
     global ausgabenbilanz
 
@@ -262,10 +264,11 @@ def send_y_m():
     print("Ausgabelimit in diesem Monat:   ", ausgabelimit)
     print ("Bilanz diesen Monat:   ",ausgabenbilanz)
     if ausgabenbilanz <0:
-        w = abs(ausgabelimit)
+        w = abs(ausgabelimit) # Ausgabelimit als Betrag
         print ("!!Warnung!! Du hast dein Ausgabelimit um ",w, "überschritten! Keine Ausgaben mehr!")
-# Buttons in tab3
+    update_label()
 
+# Buttons in tab3
 entry_ausgabelimit = ttk.Entry(tab3)
 entry_ausgabelimit.grid (row =1, column=0)
 button_ausgabelimit=ttk.Button(tab3,text="<<-- Ausgabelimit in €", command =answer_ausgabelimit)
@@ -283,6 +286,25 @@ button_jahr.grid(row=1, column=2,sticky="e")
 
 button_send_y_m=ttk.Button(tab3,text="Start", command =send_y_m)
 button_send_y_m.grid(row=1, column=3,sticky="e")
+
+# Ausgabe von Ausgabelimit im jew. Monat
+
+label_text = ctk.StringVar()
+
+def update_label():
+    if ausgaben_monat is None:
+        pass
+    else:
+        label_text.set(f"Deine Ausgaben im Monat {monat_ausgewaehlt} in {jahr_ausgewaehlt}: {ausgaben_monat}€.")
+if ausgaben_monat is None:
+    pass
+else:
+    ausgaben_monat.trace_add("write", update_label)
+
+label_ausgabenbilanz = ttk.Label(tab3, textvariable=label_text, font=("Arial", 20),)
+label_ausgabenbilanz.grid(row=2, column=0,columnspan=4)
+
+update_label()
 
 # Run the application
 app.mainloop()
