@@ -394,8 +394,6 @@ table_sparen.heading("wert_gespart",text="Preis in €")
 table_sparen.heading("datum_gespart",text="Datum in YYYYMMDD")
 table_sparen.grid(row=2,column=0,columnspan=4,sticky="nsew")
 
-wert_gespart = ""
-datum_gespart = ""
 
 def answer_wert_gespart():
     global wert_gespart
@@ -409,8 +407,8 @@ def save_wert():
         print("Alle Felder müssen ausgefüllt sein!")
     else:
         neu_gespart = {
-        "wert_gespart": wert_gespart,
-        "datum_gespart": datum_gespart
+        "wert_gespart": str(wert_gespart),
+        "datum_gespart": str(datum_gespart)
     }
 
         # Prüfung, ob .json und array existiert
@@ -430,6 +428,7 @@ def save_wert():
         daten_gespart.append(neu_gespart) # Eintrag wird der zu "daten hinzugefügt"
         with open("gespart.json", "w", encoding="utf-8") as datei_gespart:
             json.dump(daten_gespart, datei_gespart, indent=4, ensure_ascii=False)
+            table_sparen.insert(parent="", index=ctk.END, values =(wert_gespart,datei_gespart)) # Tabelle bei neuem Eintrag direkt updaten
 
 def gespart_löschen():
     with open("gespart.json", "r", encoding="utf-8") as f:
@@ -460,6 +459,22 @@ button_save_wert.grid(row=1, column=2,sticky="w", padx=(22,0))
 
 button_save_ausgabe=ttk.Button(tab4,text="Letzten Eintrag löschen",command =gespart_löschen)
 button_save_ausgabe.grid(row=1, column=3,sticky="e")
+
+# Einträge aus gespart.json lesen und in listen eintragen 
+
+with open("gespart.json", "r") as fh:
+    ersparnisse = json.load(fh)
+
+preise_gespart=[]
+datums_gespart=[]
+
+for eintrag in ersparnisse:
+    preise_gespart.append(eintrag["wert_gespart"])
+    datums_gespart.append(eintrag["datum_gespart"]) 
+
+# Einträge eintragen
+for i in range (len(preise_gespart)):
+    table_sparen.insert(parent="", index=i, values =(preise_gespart[i], datums_gespart[i]))
 
 # Run the application
 app.mainloop()
