@@ -428,7 +428,7 @@ def save_wert():
         daten_gespart.append(neu_gespart) # Eintrag wird der zu "daten hinzugefügt"
         with open("gespart.json", "w", encoding="utf-8") as datei_gespart:
             json.dump(daten_gespart, datei_gespart, indent=4, ensure_ascii=False)
-            table_sparen.insert(parent="", index=ctk.END, values =(wert_gespart,datei_gespart)) # Tabelle bei neuem Eintrag direkt updaten
+            table_sparen.insert(parent="", index=ctk.END, values =(wert_gespart,datum_gespart)) # Tabelle bei neuem Eintrag direkt updaten
 
 def gespart_löschen():
     with open("gespart.json", "r", encoding="utf-8") as f:
