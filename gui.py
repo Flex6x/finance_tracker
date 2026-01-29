@@ -275,7 +275,7 @@ def send_y_m():
     speichere_wert_bilanz()
     update_label_ausgaben_m()
 
-# Buttons in tab3
+# Buttons und entrys in tab3
 entry_ausgabelimit = ttk.Entry(tab3, font = ("Arial", 15))
 entry_ausgabelimit.grid (row =1, column=0, sticky="w")
 button_ausgabelimit=ttk.Button(tab3,text="<<-- Ausgabelimit in €", command =answer_ausgabelimit)
@@ -388,6 +388,36 @@ label_tab4_beschreibung = ctk.CTkLabel(
 )
 label_tab4_beschreibung.grid(row=0, column=0,columnspan=4,sticky ="ew")
 
+# Tabelle in Tab 4 anlegen
+table_sparen = ttk.Treeview(tab4,columns = ("wert_gespart", "datum_gespart"),show="headings")
+table_sparen.heading("wert_gespart",text="Preis in €")
+table_sparen.heading("datum_gespart",text="Datum in YYYYMMDD")
+table_sparen.grid(row=2,column=0,columnspan=3,sticky="nsew")
+
+def answer_wert_gespart():
+    global wert_gespart
+    preis = float(entry_wert_gespart.get())
+def answer_datum_gespart():
+    global datum_gespart
+    datum = int(entry_datum_gespart.get())
+
+def save_wert():
+    pass
+
+# Entry zu Wert
+entry_wert_gespart = ttk.Entry(tab4, font = ("Arial", 13))
+entry_wert_gespart.grid (row =1, column=0,sticky="w")
+button_wert_gespart=ttk.Button(tab4,text="<<-- Wert in €", command =answer_wert_gespart)
+button_wert_gespart.grid(row=1, column=0,sticky="e", padx=(0,10))
+
+# Entry zu Datum
+entry_datum_gespart = ttk.Entry(tab4, font = ("Arial", 13))
+entry_datum_gespart.grid (row =1, column=1,sticky="w")
+button_datum_gespart=ttk.Button(tab4,text="<<-- Datum in YYYYMMDD", command =answer_datum_gespart)
+button_datum_gespart.grid(row=1, column=1,sticky="e", padx=(130,0))
+
+button_save_wert=ttk.Button(tab4,text="start",command =save_wert)
+button_save_wert.grid(row=1, column=2,sticky="w", padx=(22,0))
 
 # Run the application
 app.mainloop()
