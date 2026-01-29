@@ -392,17 +392,56 @@ label_tab4_beschreibung.grid(row=0, column=0,columnspan=4,sticky ="ew")
 table_sparen = ttk.Treeview(tab4,columns = ("wert_gespart", "datum_gespart"),show="headings")
 table_sparen.heading("wert_gespart",text="Preis in €")
 table_sparen.heading("datum_gespart",text="Datum in YYYYMMDD")
-table_sparen.grid(row=2,column=0,columnspan=3,sticky="nsew")
+table_sparen.grid(row=2,column=0,columnspan=4,sticky="nsew")
+
+wert_gespart = ""
+datum_gespart = ""
 
 def answer_wert_gespart():
     global wert_gespart
-    preis = float(entry_wert_gespart.get())
+    wert_gespart = float(entry_wert_gespart.get())
 def answer_datum_gespart():
     global datum_gespart
-    datum = int(entry_datum_gespart.get())
+    datum_gespart = int(entry_datum_gespart.get())
 
 def save_wert():
-    pass
+    if wert_gespart == "" or datum_gespart == "": # Neuer Eintrag nur wenn alle Felder gefüllt sind
+        print("Alle Felder müssen ausgefüllt sein!")
+    else:
+        neu_gespart = {
+        "wert_gespart": wert_gespart,
+        "datum_gespart": datum_gespart
+    }
+
+        # Prüfung, ob .json und array existiert
+
+        if os.path.exists("gespart.json"):
+            with open("gespart.json", "r", encoding="utf-8") as datei_gespart:
+                try:
+                    daten_gespart = json.load(datei_gespart)
+                    # falls ein einzelnes Objekt drinsteht, in Liste umwandeln
+                    if isinstance(daten_gespart, dict):
+                        daten_gespart = [daten_gespart]
+                except json.JSONDecodeError:
+                    daten_gespart = []
+        else:
+            daten_gespart = []
+
+        daten_gespart.append(neu_gespart) # Eintrag wird der zu "daten hinzugefügt"
+        with open("gespart.json", "w", encoding="utf-8") as datei_gespart:
+            json.dump(daten_gespart, datei_gespart, indent=4, ensure_ascii=False)
+
+def gespart_löschen():
+    with open("gespart.json", "r", encoding="utf-8") as f:
+        daten_gespart = json.load(f)
+
+    # letzten Datensatz entfernen
+    daten_gespart.pop()
+
+    with open("gespart.json", "w", encoding="utf-8") as f:
+        json.dump(daten_gespart, f, indent=4)
+    items = table_sparen.get_children()
+    table_sparen.delete(items[-1])
 
 # Entry zu Wert
 entry_wert_gespart = ttk.Entry(tab4, font = ("Arial", 13))
@@ -418,6 +457,9 @@ button_datum_gespart.grid(row=1, column=1,sticky="e", padx=(130,0))
 
 button_save_wert=ttk.Button(tab4,text="start",command =save_wert)
 button_save_wert.grid(row=1, column=2,sticky="w", padx=(22,0))
+
+button_save_ausgabe=ttk.Button(tab4,text="Letzten Eintrag löschen",command =gespart_löschen)
+button_save_ausgabe.grid(row=1, column=3,sticky="e")
 
 # Run the application
 app.mainloop()
