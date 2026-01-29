@@ -221,7 +221,7 @@ def answer_ausgabelimit():
     global limit
     global ausgabelimit
     limit = entry_ausgabelimit.get()
-    ausgabelimit = int(limit)
+    ausgabelimit = float(limit)
     speichere_wert_al ()
 def answer_monat():
     global monat_ausgewaehlt
@@ -302,13 +302,13 @@ datei_al = "ausgabelimit_datei.txt"
 def lade_wert_al():
     if os.path.exists(datei_al):
         with open(datei_al, "r") as f:
-            return int(f.read())
+            return float(f.read())
     return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
 datei_m_g = "monat_ausg.txt"
 def lade_wert_monat():
     if os.path.exists(datei_m_g):
         with open(datei_m_g, "r") as f:
-            return int(f.read())
+            return str(f.read())
     return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
 datei_j_g = "jahr_ausg.txt"
 def lade_wert_jahr():
@@ -320,13 +320,13 @@ datei_ab = "ausgabenbilanz_datei.txt"
 def lade_wert_bilanz():
     if os.path.exists(datei_ab):
         with open(datei_ab, "r") as f:
-            return int(f.read())
+            return float(f.read())
     return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
 datei_am = "ausgaben_monat_datei.txt"
 def lade_wert_ausgaben_monat():
     if os.path.exists(datei_am):
         with open(datei_am, "r") as f:
-            return int(f.read())
+            return float(f.read())
     return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
 
 def speichere_wert_al():
@@ -347,7 +347,7 @@ def speichere_wert_ausgaben_monat():
 
 def update_label_ausgaben_m():
     bilanzinfo = ""
-    ab = ausgabenbilanz
+    ab = round(ausgabenbilanz,2)
     if ausgabenbilanz is None:
         pass
     else:
@@ -357,11 +357,11 @@ def update_label_ausgaben_m():
             bilanzinfo = f"Achtung! Du hast dein Ausgabenlimit erreicht"
         else:
             bilanzinfo = f"!!Warnung!! Du hast dein Ausgabelimit um {abs(ab)}€ überschritten! \nKeine Ausgaben mehr!"
-
+    ausgabenbilanz_round = round(ausgabenbilanz,2)
     if ausgaben_monat is None:
         pass
     else:
-        label_text.set(f"Deine Ausgaben im Monat {monat_ausgewaehlt} in {jahr_ausgewaehlt}: {ausgaben_monat}€. \nAusgabelimit im Monat {monat_ausgewaehlt}: {ausgabelimit}€ \nBilanz im Monat {monat_ausgewaehlt}: {ausgabenbilanz}€\n{bilanzinfo}")
+        label_text.set(f"Deine Ausgaben im Monat {monat_ausgewaehlt} in {jahr_ausgewaehlt}: {ausgaben_monat}€. \nAusgabelimit im Monat {monat_ausgewaehlt}: {ausgabelimit}€ \nBilanz im Monat {monat_ausgewaehlt}: {ausgabenbilanz_round}€\n{bilanzinfo}")
 if ausgaben_monat is None:
     pass
 else:
@@ -370,9 +370,9 @@ else:
 label_ausgabenbilanz = ttk.Label(tab3, textvariable=label_text, font=("Arial", 30))
 label_ausgabenbilanz.grid(row=2, column=0,columnspan=4)
 
-ausgabelimit = int(lade_wert_al())
-ausgabenbilanz = int(lade_wert_bilanz())
-ausgaben_monat = int(lade_wert_ausgaben_monat())
+ausgabelimit = float(lade_wert_al())
+ausgabenbilanz = float(lade_wert_bilanz())
+ausgaben_monat = float(lade_wert_ausgaben_monat())
 monat_ausgewaehlt = str(lade_wert_monat())
 jahr_ausgewaehlt = str(lade_wert_jahr())
 update_label_ausgaben_m()
@@ -381,7 +381,7 @@ update_label_ausgaben_m()
 label_tab4_beschreibung = ctk.CTkLabel(
     master=tab4,
     text="Hier kannst du alle deine gesparten Geldbeträge mit jeweiligem Datum eintragen. Dir erhälst auf Basis von deinem Sparziel Vorschläge, wie viel Geld du für dieses jede Woche bei Seite legen muss.",
-    wraplength=600, #mit automatischem Zeilenumbruch
+    wraplength=600, # mit automatischem Zeilenumbruch
     font=("Arial", 20),
     text_color="white",
     corner_radius=8
