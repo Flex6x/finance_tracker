@@ -544,6 +544,7 @@ def send_y_m_tab5():
     sparbilanz = sparziel - gespartes_monat
     sparbilanz_str = str(sparbilanz)
     speichere_wert_sparbilanz()
+    update_label_gespartes_m
 
 datei_sparziel = "sparziel.txt"
 datei_sparbilanz = "sparbilanz.txt"
@@ -565,6 +566,10 @@ def lade_wert_gespartes_monat():
             return float(f.read())
     return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
 
+label_text_tab5 = ctk.StringVar()
+label_sparbilanz = ttk.Label(tab5, textvariable=label_text_tab5, font=("Arial", 30))
+label_sparbilanz.grid(row=2, column=0,columnspan=4)
+
 
 def speichere_wert_sparziel():
     with open(datei_sparziel, "w") as f:
@@ -576,6 +581,13 @@ def speichere_wert_gespartes_monat():
     with open(datei_gespartes_m, "w") as f:
         f.write(gespartes_monat_str)
 
+def update_label_gespartes_m():
+    sparbilanz_round = round(sparbilanz,2)
+    if gespartes_monat is None:
+        pass
+    else:
+        label_text_tab5.set(f"Deine Ersparnisse im Monat {monat_ausgewaehlt} in {jahr_ausgewaehlt}: {gespartes_monat}€. \nSparziel im Monat {monat_ausgewaehlt}: {sparziel}€ \nBilanz im Monat {monat_ausgewaehlt}: {sparbilanz}€")
+update_label_gespartes_m
 # Buttons
 entry_sparziel = ttk.Entry(tab5, font = ("Arial", 15))
 entry_sparziel.grid (row =1, column=0, sticky="w")
