@@ -496,7 +496,7 @@ def answer_sparziel():
     global sparziel
     sparziel_str = entry_sparziel.get()
     sparziel = float(sparziel_str)
-    #speichere_wert_al ()
+    speichere_wert_sparziel()
 def answer_monat_tab5():
     global monat_ausgewaehlt
     monat_ausgewaehlt = str(entry_monat_tab5.get())
@@ -554,13 +554,11 @@ def lade_wert_sparziel():
         with open(datei_sparziel, "r") as f:
             return float(f.read())
     return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
-datei_ab = "ausgabenbilanz_datei.txt"
 def lade_wert_sparbilanz():
     if os.path.exists(datei_sparbilanz):
         with open(datei_sparbilanz, "r") as f:
             return float(f.read())
     return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
-datei_am = "ausgaben_monat_datei.txt"
 def lade_wert_gespartes_monat():
     if os.path.exists(datei_gespartes_m):
         with open(datei_gespartes_m, "r") as f:
@@ -571,7 +569,6 @@ def lade_wert_gespartes_monat():
 def speichere_wert_sparziel():
     with open(datei_sparziel, "w") as f:
         f.write(sparziel_str)
-        print (sparziel_str)
 def speichere_wert_sparbilanz():
     with open(datei_sparbilanz, "w") as f:
         f.write(sparbilanz_str)
