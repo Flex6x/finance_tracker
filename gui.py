@@ -76,8 +76,10 @@ tab4.grid_rowconfigure((2), weight=20)
 tab4.grid_columnconfigure((0,1,2), weight=1)
 
 # rows and columns in tab5
-tab5.grid_rowconfigure(0, weight=1)
-tab5.grid_columnconfigure(0, weight=1)
+tab5.grid_rowconfigure(0, weight=7)
+tab5.grid_rowconfigure(1, weight=10)
+tab5.grid_rowconfigure((2), weight=20)
+tab5.grid_columnconfigure((0,1,2,3), weight=1)
 
 # Überschrift
 label_ueberschrift = ctk.CTkLabel(app, text="Finanz Tracker", font=("Arial", 35))
@@ -314,7 +316,7 @@ datei_j_g = "jahr_ausg.txt"
 def lade_wert_jahr():
     if os.path.exists(datei_j_g):
         with open(datei_j_g, "r") as f:
-            return int(f.read())
+            return str(f.read())
     return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
 datei_ab = "ausgabenbilanz_datei.txt"
 def lade_wert_bilanz():
@@ -475,6 +477,126 @@ for eintrag in ersparnisse:
 # Einträge eintragen
 for i in range (len(preise_gespart)):
     table_sparen.insert(parent="", index=i, values =(preise_gespart[i], datums_gespart[i]))
+
+# Text für tab5
+label_tab5_beschreibung = ctk.CTkLabel(
+    master=tab5,
+    text="Hier kannst du dein monatliches Sparziel eingeben. Wähle außerdem deinen aktuellen Monat und Jahr aus. Es werden alle gesparten Geldwerte aus diesem Monat addiert.",
+    wraplength=600, # mit automatischem Zeilenumbruch
+    font=("Arial", 20),
+    text_color="white",
+    corner_radius=8
+)
+label_tab5_beschreibung.grid(row=0, column=0,columnspan=4,sticky ="ew")
+
+# Funktionen für die entrys
+sparziel = ""
+def answer_sparziel():
+    global sparziel_str
+    global sparziel
+    sparziel_str = entry_sparziel.get()
+    sparziel = float(sparziel_str)
+    #speichere_wert_al ()
+def answer_monat_tab5():
+    global monat_ausgewaehlt
+    monat_ausgewaehlt = str(entry_monat_tab5.get())
+    speichere_wert_monat()
+def answer_jahr_tab5():
+    global jahr_ausgewaehlt
+    jahr_ausgewaehlt = entry_jahr_tab5.get()
+    speichere_wert_jahr()
+def send_y_m_tab5():
+    with open("ausgaben.json", "r") as fh:
+        ausgaben = json.load(fh)
+
+    werte_tab5=[]
+    datums_tab3=[]
+
+    for eintrag in ausgaben:
+        werte_tab5.append(eintrag["preis"])
+        datums_tab3.append(eintrag["datum"]) 
+
+    wert_monat=[] # Liste für alle Preise von Ausgaben in gewähltem Monat
+
+    # Monat wird ausgelesen, falls Monat mit gewähltem M. übereinstimmt wird der jeweilige Preis zur Liste hinzugefügt
+    for i in range (len(werte_tab5)):
+        z0 = str(datums_tab3[i])[0]
+        z1 = str(datums_tab3[i])[1]
+        z2 = str(datums_tab3[i])[2]
+        z3 = str(datums_tab3[i])[3]
+        zy = z0+z1+z2+z3
+        z4 = str(datums_tab3[i])[4]
+        z5 = str(datums_tab3[i])[5]
+        zm =z4+z5
+        if zm == monat_ausgewaehlt and zy == jahr_ausgewaehlt :
+            wert_monat.append(werte_tab5[i])
+
+    # Berechnung von gesamtem Preis der Ausgaben in Monat
+    global gespartes_monat
+    global sparbilanz
+    global sparbilanz_str
+    global gespartes_monat_str
+    gespartes_monat = 0
+    for i in range (len(wert_monat)):
+        gespartes_monat += wert_monat[i]
+    gespartes_monat_str = str(gespartes_monat)
+    speichere_wert_gespartes_monat()
+    sparbilanz = sparziel - gespartes_monat
+    sparbilanz_str = str(sparbilanz)
+    speichere_wert_sparbilanz()
+
+datei_sparziel = "sparziel.txt"
+datei_sparbilanz = "sparbilanz.txt"
+datei_gespartes_m = "gespartes_monat.txt"
+
+def lade_wert_sparziel():
+    if os.path.exists(datei_sparziel):
+        with open(datei_sparziel, "r") as f:
+            return float(f.read())
+    return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
+datei_ab = "ausgabenbilanz_datei.txt"
+def lade_wert_sparbilanz():
+    if os.path.exists(datei_sparbilanz):
+        with open(datei_sparbilanz, "r") as f:
+            return float(f.read())
+    return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
+datei_am = "ausgaben_monat_datei.txt"
+def lade_wert_gespartes_monat():
+    if os.path.exists(datei_gespartes_m):
+        with open(datei_gespartes_m, "r") as f:
+            return float(f.read())
+    return 0  # Defaultwert (gibt 0 zurück in die Variable falls .txt nicht extistiert)
+
+
+def speichere_wert_sparziel():
+    with open(datei_sparziel, "w") as f:
+        f.write(sparziel_str)
+        print (sparziel_str)
+def speichere_wert_sparbilanz():
+    with open(datei_sparbilanz, "w") as f:
+        f.write(sparbilanz_str)
+def speichere_wert_gespartes_monat():
+    with open(datei_gespartes_m, "w") as f:
+        f.write(gespartes_monat_str)
+
+# Buttons
+entry_sparziel = ttk.Entry(tab5, font = ("Arial", 15))
+entry_sparziel.grid (row =1, column=0, sticky="w")
+button_sparziel=ttk.Button(tab5,text="<<-- Sparziel in €", command =answer_sparziel)
+button_sparziel.grid(row=1, column=0, padx=(200, 0))
+
+entry_monat_tab5 = ttk.Entry(tab5, font = ("Arial", 15))
+entry_monat_tab5.grid (row =1, column=1,sticky="w")
+button_monat_tab5=ttk.Button(tab5,text="<<-- Monat", command =answer_monat_tab5)
+button_monat_tab5.grid(row=1, column=1, padx=(200, 0))
+
+entry_jahr_tab5 = ttk.Entry(tab5, font = ("Arial", 15))
+entry_jahr_tab5.grid (row =1, column=2,sticky ="w")
+button_jahr_tab5=ttk.Button(tab5,text="<<-- Jahr", command =answer_jahr_tab5)
+button_jahr_tab5.grid(row=1, column=2, padx=(200, 0))
+
+button_send_y_m_tab5=ttk.Button(tab5,text="Start", command =send_y_m_tab5)
+button_send_y_m_tab5.grid(row=1, column=3)
 
 # Run the application
 app.mainloop()
