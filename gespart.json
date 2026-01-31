@@ -1,6 +1,10 @@
 [
     {
-        "wert_gespart": "10.0",
-        "datum_gespart": "20260129"
+        "wert_gespart": 33.0,
+        "datum_gespart": 20260131
+    },
+    {
+        "wert_gespart": 20.0,
+        "datum_gespart": 20260122
     }
 ]

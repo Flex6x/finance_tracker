@@ -409,8 +409,8 @@ def save_wert():
         print("Alle Felder müssen ausgefüllt sein!")
     else:
         neu_gespart = {
-        "wert_gespart": str(wert_gespart),
-        "datum_gespart": str(datum_gespart)
+        "wert_gespart": float(wert_gespart),
+        "datum_gespart": int(datum_gespart)
     }
 
         # Prüfung, ob .json und array existiert
@@ -491,6 +491,8 @@ label_tab5_beschreibung.grid(row=0, column=0,columnspan=4,sticky ="ew")
 
 # Funktionen für die entrys
 sparziel = ""
+gespartes_monat = None
+sparbilanz = None
 def answer_sparziel():
     global sparziel_str
     global sparziel
@@ -506,17 +508,17 @@ def answer_jahr_tab5():
     jahr_ausgewaehlt = entry_jahr_tab5.get()
     speichere_wert_jahr()
 def send_y_m_tab5():
-    with open("ausgaben.json", "r") as fh:
-        ausgaben = json.load(fh)
+    with open("gespart.json", "r") as fh:
+        gespartes = json.load(fh)
 
     werte_tab5=[]
     datums_tab3=[]
 
-    for eintrag in ausgaben:
-        werte_tab5.append(eintrag["preis"])
-        datums_tab3.append(eintrag["datum"]) 
+    for eintrag in gespartes:
+        werte_tab5.append(eintrag["wert_gespart"])
+        datums_tab3.append(eintrag["datum_gespart"]) 
 
-    wert_monat=[] # Liste für alle Preise von Ausgaben in gewähltem Monat
+    wert_monat=[] # Liste für alle Werte von Gespartem in gewähltem Monat
 
     # Monat wird ausgelesen, falls Monat mit gewähltem M. übereinstimmt wird der jeweilige Preis zur Liste hinzugefügt
     for i in range (len(werte_tab5)):
@@ -541,7 +543,7 @@ def send_y_m_tab5():
         gespartes_monat += wert_monat[i]
     gespartes_monat_str = str(gespartes_monat)
     speichere_wert_gespartes_monat()
-    sparbilanz = sparziel - gespartes_monat
+    sparbilanz = gespartes_monat - sparziel
     sparbilanz_str = str(sparbilanz)
     speichere_wert_sparbilanz()
     update_label_gespartes_m()
@@ -583,10 +585,24 @@ def speichere_wert_gespartes_monat():
 
 def update_label_gespartes_m():
     sparbilanz_round = round(sparbilanz,2)
+    sparziel_round = round(sparziel,2)
+    sparbilanzinfo = ""
+    sb = round(sparbilanz,2)
+    if sparbilanz is None:
+        pass
+    else:
+        if sb > 0:
+            sparbilanzinfo = f"Sehr gut! Du hast {sb}€ mehr als dein Ziel gespart!"
+        elif sb == 0:
+            sparbilanzinfo = f"Perfekt! Du hast dein Sparziel erreicht"
+        else:
+            sparbilanzinfo = f"!Achtung! Du musst diesen Monat noch {abs(sb)}€ sparen!"
+    ausgabenbilanz_round = round(ausgabenbilanz,2)
     if gespartes_monat is None:
         pass
     else:
-        label_text_tab5.set(f"Deine Ersparnisse im Monat {monat_ausgewaehlt} in {jahr_ausgewaehlt}: {gespartes_monat}€. \nSparziel im Monat {monat_ausgewaehlt}: {sparziel}€ \nBilanz im Monat {monat_ausgewaehlt}: {sparbilanz}€")
+        label_text_tab5.set(f"Deine Ersparnisse im Monat {monat_ausgewaehlt} in {jahr_ausgewaehlt}: {gespartes_monat}€. \nSparziel im Monat {monat_ausgewaehlt}: {sparziel_round}€ \nSparbilanz im Monat {monat_ausgewaehlt}: {sparbilanz_round}€\n{sparbilanzinfo} ")
+
 # Buttons
 entry_sparziel = ttk.Entry(tab5, font = ("Arial", 15))
 entry_sparziel.grid (row =1, column=0, sticky="w")
@@ -608,7 +624,7 @@ button_send_y_m_tab5.grid(row=1, column=3)
 
 sparziel = float(lade_wert_sparziel())
 sparbilanz = float(lade_wert_sparbilanz())
-gespartes_monat = float(lade_wert_gespartes_monat())
+gespartes_monat = int(lade_wert_gespartes_monat())
 update_label_gespartes_m()
 
 # Run the application
