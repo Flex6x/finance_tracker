@@ -1,12 +1,7 @@
 [
     {
-        "produkt": "Geschichts Exkursion",
+        "produkt": "Apfel",
         "preis": 8.85,
         "datum": 20260128
-    },
-    {
-        "produkt": "Sauerkraut",
-        "preis": 4.0,
-        "datum": 20260131
     }
 ]
